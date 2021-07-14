@@ -30,10 +30,7 @@ class CardComponent extends LitElement {
           : "undraggable"}"
       >
         ${this.loader
-          ? html`
-              <span class="loader"></span>
-              <!-- <span class="card-title">Dropping....</span> -->
-            `
+          ? html` <span class="loader"></span> `
           : html`
               <p class="card-title">${this.item.desc}</p>
               <h2>${this.item.title}</h2>
