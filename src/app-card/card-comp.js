@@ -25,7 +25,7 @@ class CardComponent extends LitElement {
         ${this.loader
           ? html`
               <span class="loader"></span>
-              <span class="card-title">Dropping....</span>
+              <!-- <span class="card-title">Dropping....</span> -->
             `
           : html`
               <p class="card-title">${this.item.desc}</p>
