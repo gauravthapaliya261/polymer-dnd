@@ -85,6 +85,9 @@ export const style = css`
     margin: 20px;
   }
 
+  tbody td{
+    display: inline-flex;
+  }
   .draggable-main {
     display: inline-table;
   }

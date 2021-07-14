@@ -12,6 +12,7 @@ class AppMain extends LitElement {
       toParent: { type: Number },
       toChild: { type: Number },
       counter: { type: Number },
+      isDragging: { type: Boolean },
     };
   }
 
@@ -24,6 +25,7 @@ class AppMain extends LitElement {
     this.attachShadow({ mode: "open" });
     this.newClass = "";
     this.counter = 0;
+    this.isDragging = false;
     this.items = [
       {
         name: "Item-1",
@@ -91,6 +93,17 @@ class AppMain extends LitElement {
         draggable.classList.add("dragging");
       });
 
+      draggable.addEventListener("dragend", () => {
+        if (this.isDragging) {
+          this.isDragging = false;
+          setTimeout(() => {
+            draggable.classList.remove("dragging");
+          }, 800);
+        } else {
+          draggable.classList.remove("dragging");
+        }
+      });
+
       draggable.addEventListener("dragover", (e) => {
         e.preventDefault();
         const selectedElement = this.shadowRoot.querySelector(".dragging");
@@ -108,9 +121,10 @@ class AppMain extends LitElement {
       draggable.addEventListener("drop", () => {
         const selectedElement = this.shadowRoot.querySelector(".dragging");
         draggable.children[0].newClass = "";
-        if (selectedElement !== draggable) {
+        if (selectedElement !== draggable && draggable.value.isDraggable) {
           if (selectedElement.value.title === draggable.value.title) {
             draggable.children[0].loader = true;
+            this.isDragging = true;
             setTimeout(() => {
               selectedElement.classList.remove("dragging");
               draggable.children[0].loader = false;
@@ -139,11 +153,7 @@ class AppMain extends LitElement {
                 }
               });
             }, 800);
-          } else {
-            selectedElement.classList.remove("dragging");
           }
-        } else {
-          selectedElement.classList.remove("dragging");
         }
       });
     });
