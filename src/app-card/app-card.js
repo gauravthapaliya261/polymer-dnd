@@ -14,6 +14,13 @@ class CardComponent extends LitElement {
     return [style];
   }
 
+  constructor() {
+    super();
+    this.item = {};
+    this.newClass = "";
+    this.loader = false;
+  }
+
   render() {
     return html`
       <div

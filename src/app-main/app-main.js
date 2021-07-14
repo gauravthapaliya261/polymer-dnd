@@ -1,5 +1,5 @@
 import { html, LitElement } from "lit";
-import "../app-card/card-comp";
+import "../app-card/app-card";
 import { style } from "./styles";
 
 class AppMain extends LitElement {
