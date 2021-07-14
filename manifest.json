@@ -1,0 +1,6 @@
+{
+  "name": "drag-and-drop",
+  "short_name": "drag-and-drop",
+  "start_url": "/",
+  "display": "standalone"
+}
