@@ -1,4 +1,5 @@
 import { html, LitElement } from "lit";
+import { classMap } from "lit-html/directives/class-map";
 import { style } from "./card-styles";
 
 class CardComponent extends LitElement {
@@ -22,13 +23,16 @@ class CardComponent extends LitElement {
   }
 
   render() {
+    const classList = {
+      card: true,
+      draggable: this.item.isDraggable,
+      undraggable: !this.item.isDraggable,
+      "can-replace": this.newClass === "can-replace",
+      "cannot-replace": this.newClass === "cannot-replace",
+    };
+
     return html`
-      <div
-        draggable=${this.item.isDraggable}
-        class="card + ${this.newClass} + ${this.item.isDraggable
-          ? "draggable"
-          : "undraggable"}"
-      >
+      <div draggable=${this.item.isDraggable} class=${classMap(classList)}>
         ${this.loader
           ? html` <span class="loader"></span> `
           : html`

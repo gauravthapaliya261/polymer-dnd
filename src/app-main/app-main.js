@@ -1,12 +1,12 @@
 import { html, LitElement } from "lit";
 import "../app-card/app-card";
 import { style } from "./styles";
+import { items } from "../models/items";
 
 class AppMain extends LitElement {
   static get properties() {
     return {
       items: { type: Array },
-      newClass: { type: String },
       fromParent: { type: Number },
       fromChild: { type: Number },
       toParent: { type: Number },
@@ -23,75 +23,22 @@ class AppMain extends LitElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    this.newClass = "";
     this.counter = 0;
     this.isDragging = false;
-    this.items = [
-      {
-        name: "Item-1",
-        listItems: [
-          {
-            desc: "One",
-            title: "City",
-            isDraggable: true,
-          },
-          {
-            desc: "Two",
-            title: "Chelsea",
-            isDraggable: false,
-          },
-          {
-            desc: "Three",
-            title: "Barcelona",
-            isDraggable: true,
-          },
-        ],
-      },
-      {
-        name: "Item-2",
-        listItems: [
-          {
-            desc: "Four",
-            title: "Barcelona",
-            isDraggable: true,
-          },
-          {
-            desc: "Five",
-            title: "Madrid",
-            isDraggable: true,
-          },
-          {
-            desc: "Six",
-            title: "Chelsea",
-            isDraggable: true,
-          },
-        ],
-      },
-      {
-        name: "Item-3",
-        listItems: [
-          {
-            desc: "Seven",
-            title: "City",
-            isDraggable: true,
-          },
-          {
-            desc: "Eight",
-            title: "Chelsea",
-            isDraggable: true,
-          },
-        ],
-      },
-    ];
+    this.items = items;
   }
 
   firstUpdated() {
     const draggables = this.shadowRoot.querySelectorAll(".draggable-main");
 
     draggables.forEach((draggable) => {
+      // Called when you start to drag an element
+
       draggable.addEventListener("dragstart", () => {
         draggable.classList.add("dragging");
       });
+
+      // Called when an drag event has ended
 
       draggable.addEventListener("dragend", () => {
         if (this.isDragging) {
@@ -104,6 +51,8 @@ class AppMain extends LitElement {
         }
       });
 
+      // Called when an element is being dragged over a valid drop target
+
       draggable.addEventListener("dragover", (e) => {
         e.preventDefault();
         const selectedElement = this.shadowRoot.querySelector(".dragging");
@@ -114,9 +63,13 @@ class AppMain extends LitElement {
         }
       });
 
+      // Called when an element leaves a valid drop target
+
       draggable.addEventListener("dragleave", () => {
         draggable.children[0].newClass = "";
       });
+
+      // Called when an element is dropped on a valid drop target
 
       draggable.addEventListener("drop", () => {
         const selectedElement = this.shadowRoot.querySelector(".dragging");
@@ -176,10 +129,10 @@ class AppMain extends LitElement {
                 <tr>
                   <td>${item.name}</td>
                   <td>
-                    ${item.listItems.map((x) => {
+                    ${item.listItems.map((data) => {
                       return html`
-                        <div class="draggable-main" .value=${x}>
-                          <app-card .item=${x}></app-card>
+                        <div class="draggable-main" .value=${data}>
+                          <app-card .item=${data}></app-card>
                         </div>
                       `;
                     })}

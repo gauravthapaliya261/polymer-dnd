@@ -41,7 +41,7 @@ export const style = css`
 
   .can-replace {
     /* background: radial-gradient(#1ff57f, #8bfe3f); */
-    background: radial-gradient(rgb(27 255 0), rgb(94 236 0))
+    background: radial-gradient(rgb(27 255 0), rgb(94 236 0));
   }
 
   .undraggable {
